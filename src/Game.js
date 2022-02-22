@@ -9,7 +9,7 @@ class Game extends Component {
     constructor(props) {
         super(props);
         this.wordLength = 5;
-        this.attemptsAllowed = 5;
+        this.attemptsAllowed = 6;
 
         this.currentWord = 0;
         this.currentLetter = 0;

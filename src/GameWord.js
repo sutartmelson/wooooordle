@@ -7,10 +7,18 @@ class GameWord extends Component {
         let wordData = this.props.wordData;
         let gameWord = [];
         for (let i = 0; i < wordData.length; i++) {
+            // Add a css transition delay so each tile flips over
+            // in sequential order, left to right.
+            const delay = 0.25;
+            const transitionTime = 0.5;
+            const tileStyle = {
+                transition: `transform ${transitionTime}s linear ${i*delay}s`
+            };
             gameWord.push(<GameTile
                             key={`row-${this.props.word}-letter-${i}`}
                             letter={wordData[i].letter}
-                            state={wordData[i].state}>
+                            state={wordData[i].state}
+                            style={tileStyle}>
                           </GameTile>);
         }
 

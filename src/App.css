@@ -1,3 +1,11 @@
+/* Global vars */
+:root {
+  --present-color: #b59f3b;
+  --absent-color: #3a3a3c;
+  --correct-color: #538d4e;
+}
+/* End Global vars */
+
 .App {
   text-align: center;
   background-color: #121213;
@@ -52,18 +60,27 @@
   box-sizing: border-box;
   vertical-align: middle;
   text-transform: uppercase;
+  /* transition: transform 0.6s; */
+  /* backface-visibility: hidden; */
 }
 
-.correct {
-  background-color: #538d4e !important;
+.tile .rotate {
+  transform: rotateX(180deg);
 }
 
-.present {
-  background-color: #b59f3b !important;
+.tile.correct {
+  transform: rotateX(180deg);
+  background-color: var(--correct-color) !important;
 }
 
-.absent {
-  background-color: #3a3a3c !important;
+.tile.present {
+  transform: rotateX(180deg);
+  background-color: var(--present-color) !important;
+}
+
+.tile.absent {
+  transform: rotateX(180deg);
+  background-color: var(--absent-color) !important;
 }
 
 /* End Tile */
@@ -137,6 +154,17 @@
   font-size: 9px;
 }
 
+.game-keyboard .correct {
+  background-color: var(--correct-color) !important;
+}
+
+.game-keyboard .present {
+  background-color: var(--present-color) !important;
+}
+
+.game-keyboard .absent {
+  background-color: var(--absent-color) !important;
+}
 /* End Game Keyboard */
 
 /* Toast */
