@@ -4,7 +4,7 @@
 ## What's left to do...
 - [ ] Toasts: Not a word
 - [x] Tile flip animations
-- [ ] Keyboard integration
+- [x] Keyboard integration
 - [ ] End screen:
   - [ ] win condition
   - [ ] lose condition
