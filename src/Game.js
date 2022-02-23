@@ -157,7 +157,16 @@ class Game extends Component {
         // Update keyboard colors
         let newKeyboardColors = this.state.keyboardColors;
         guessedWordData.forEach(guessedLetter => {
-            newKeyboardColors[guessedLetter.letter] = guessedLetter.state;
+            // If state is correct, override everything
+            // Else if state is present, override absent
+            // Else, state is absent, override nothing
+            if (guessedLetter.state === STATE.CORRECT) {
+                newKeyboardColors[guessedLetter.letter] = guessedLetter.state;
+            } else if (guessedLetter.state === STATE.PRESENT) {
+                if (newKeyboardColors[guessedLetter.letter] !== STATE.CORRECT) {
+                    newKeyboardColors[guessedLetter.letter] = guessedLetter.state;
+                }
+            }
         });
 
         gameData[this.currentWord] = guessedWordData;
