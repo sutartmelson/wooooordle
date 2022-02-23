@@ -1,4 +1,5 @@
 import React, {Component} from 'react';
+import { DEFAULT_TILE, STATE } from './constants';
 import GameTile from './GameTile';
 
 class GameWord extends Component {
@@ -11,8 +12,10 @@ class GameWord extends Component {
             // in sequential order, left to right.
             const delay = 0.25;
             const transitionTime = 0.5;
-            const tileStyle = {
-                transition: `transform ${transitionTime}s linear ${i*delay}s`
+            const tileStyle = wordData[i].state === STATE.STATELESS ? {} : 
+            {
+                transition: `transform ${transitionTime}s linear ${i*delay}s`,
+                transform: 'rotateX(0deg)'
             };
             gameWord.push(<GameTile
                             key={`row-${this.props.word}-letter-${i}`}

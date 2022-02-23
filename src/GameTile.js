@@ -1,33 +1,38 @@
 import React, {Component} from 'react';
-import { STATE } from './constants';
+import { DEFAULT_TILE, STATE } from './constants';
 
 class GameTile extends Component {
     
     render() {
-        let className;
-        let innerClassName;
+        let backClassName;
+        let frontClassName = 'front used';
         if (this.props.state === STATE.PRESENT) {
             // Yellow
-            className = 'tile present';
-            innerClassName = 'rotate';
+            backClassName = 'back present';
         } else if (this.props.state === STATE.CORRECT) {
             // Green
-            className = 'tile correct';
-            innerClassName = 'rotate';
+            backClassName = 'back correct';
         } else if (this.props.state === STATE.ABSENT) {
             // Gray
-            className = 'tile absent';
-            innerClassName = 'rotate';
+            backClassName = 'back absent';
         } else {
             // Default
-            className = 'tile normal';
-            innerClassName = '';
+            // Letter has not yet been validated
+            backClassName = 'back';
+            if (this.props.letter === DEFAULT_TILE) {
+                frontClassName = 'front';
+            }
         }
         return (
-            <div className={className} style={this.props.style}>
-                <div className={innerClassName}
-                     style={this.props.style}>
-                    {this.props.letter}
+            <div className='tile'>
+                <div className='tile-inner'>
+                    <div className={frontClassName}>
+                        {this.props.letter}
+                    </div>
+                    <div className={backClassName}
+                         style={this.props.style}>
+                        {this.props.letter}
+                    </div>
                 </div>
             </div>
         );

@@ -3,7 +3,7 @@
 
 ## What's left to do...
 - [ ] Toasts: Not a word
-- [ ] WIP Tile flip animations
+- [x] Tile flip animations
 - [ ] Keyboard integration
 - [ ] End screen:
   - [ ] win condition

@@ -43,7 +43,6 @@ class Game extends Component {
         return (
             <div>
                 <GameBoard
-                    className='game-board'
                     gameData={this.state.gameData}>
                     </GameBoard>
                 <GameKeyboard
@@ -108,8 +107,7 @@ class Game extends Component {
     }
 
     pickTodaysWord() {
-        return 'speed';
-        //return WORDS[94];
+        return WORDS[Math.floor(Math.random() * WORDS.length)]
     }
 
     validateWord() {
