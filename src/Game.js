@@ -163,7 +163,13 @@ class Game extends Component {
             if (guessedLetter.state === STATE.CORRECT) {
                 newKeyboardColors[guessedLetter.letter] = guessedLetter.state;
             } else if (guessedLetter.state === STATE.PRESENT) {
-                if (newKeyboardColors[guessedLetter.letter] !== STATE.CORRECT) {
+                if (newKeyboardColors[guessedLetter.letter] !== STATE.CORRECT ||
+                    !!!newKeyboardColors[guessedLetter.letter]) {
+                    newKeyboardColors[guessedLetter.letter] = guessedLetter.state;
+                }
+            } else if (guessedLetter.state === STATE.ABSENT) {
+                if (newKeyboardColors[guessedLetter.letter] === STATE.STATELESS ||
+                    !!!newKeyboardColors[guessedLetter.letter]) {
                     newKeyboardColors[guessedLetter.letter] = guessedLetter.state;
                 }
             }
