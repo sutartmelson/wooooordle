@@ -1,4 +1,5 @@
 import React, {Component} from 'react';
+import toast, { Toaster } from 'react-hot-toast';
 import GameBoard from './GameBoard';
 import GameKeyboard from './GameKeyboard';
 import { WORDS } from './wordlist';
@@ -43,9 +44,11 @@ class Game extends Component {
         this.onLetterClick = this.onLetterClick.bind(this);
         this.backspace = this.backspace.bind(this);
     }
+
     render() {
         return (
             <div className="game">
+                <Toaster></Toaster>
                 <GameBoard
                     gameData={this.state.gameData}>
                     </GameBoard>
@@ -129,6 +132,7 @@ class Game extends Component {
             guessedWordData.forEach(ld => ld.state = STATE.CORRECT);
             // Game over, user wins!
             this.setState({isGameOver: true});
+            this.notifyGameWin();
         }
         // Is guessed word a real word?
         else if (WORDS.find(validWord => guessedWord === validWord)){
@@ -160,6 +164,7 @@ class Game extends Component {
         // guessed word is not a real word
         else {
             // Notify user
+            this.notifyNotAWord();
             return;
         }
         
@@ -194,6 +199,7 @@ class Game extends Component {
         if (this.currentWord === this.attemptsAllowed) {
             // Game over
             this.setState({isGameOver: true});
+            this.notifyGameLose();
         }
     }
 
@@ -202,6 +208,18 @@ class Game extends Component {
         this.currentWord++;
         this.currentLetter = 0;
         this.lastLetterPopulated = false;
+    }
+
+    notifyNotAWord() {
+        toast("Not a word!");
+    }
+
+    notifyGameLose() {
+        toast(this.WORD);
+    }
+
+    notifyGameWin() {
+        toast("Good job!");
     }
 }
 
