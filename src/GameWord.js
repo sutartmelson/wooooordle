@@ -1,5 +1,5 @@
 import React, {Component} from 'react';
-import { DEFAULT_TILE, STATE } from './constants';
+import { STATE } from './constants';
 import GameTile from './GameTile';
 
 class GameWord extends Component {

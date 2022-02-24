@@ -63,7 +63,8 @@ class GameKeyboard extends Component {
                         {this.mapLettersToButton(this.keyboard[2])}
                         <button data-key={SPECIAL_KEYS.BACKSPACE}
                                 className='spacer-three-halves'
-                                onClick={this.onLetterClick}>←</button>
+                                onClick={this.onLetterClick}
+                                style={{margin: 0}}>←</button>
                     </div>
                 </div>
             </div>
@@ -71,8 +72,12 @@ class GameKeyboard extends Component {
     }
 
     mapLettersToButton(letters) {
-        return letters.map(letter => {
+        return letters.map((letter) => {
             let className;
+            let style = {};
+            if (letter === 'p' || letter === 'l') {
+                style = {margin: 0};
+            }
             if (this.props.keyboardColors[letter] === STATE.PRESENT) {
                 // Yellow
                 className = 'present';
@@ -91,7 +96,8 @@ class GameKeyboard extends Component {
                     className={className}
                     key={letter}
                     data-key={letter}
-                    onClick={this.onLetterClick}>
+                    onClick={this.onLetterClick}
+                    style={style}>
                     {letter}
                 </button>
             );

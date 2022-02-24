@@ -31,7 +31,11 @@ class Game extends Component {
             return {[letter]: STATE.DEFAULT_TILE};
         }));
 
-        this.state = { gameData: gameData, keyboardColors: keyboardColors};
+        this.state = { 
+            gameData: gameData,
+            keyboardColors: keyboardColors,
+            isGameOver: false
+        };
 
         this.WORD = this.pickTodaysWord();
 
@@ -41,7 +45,7 @@ class Game extends Component {
     }
     render() {
         return (
-            <div>
+            <div className="game">
                 <GameBoard
                     gameData={this.state.gameData}>
                     </GameBoard>
@@ -54,6 +58,9 @@ class Game extends Component {
     }
 
     onLetterClick(key) {
+        if (this.state.isGameOver) {
+            return;
+        }
         if (key === SPECIAL_KEYS.BACKSPACE) {
             this.backspace();
         } else if (key === SPECIAL_KEYS.ENTER) {
@@ -120,6 +127,8 @@ class Game extends Component {
         // Is guessed word THE word?
         if (guessedWord === this.WORD) {
             guessedWordData.forEach(ld => ld.state = STATE.CORRECT);
+            // Game over, user wins!
+            this.setState({isGameOver: true});
         }
         // Is guessed word a real word?
         else if (WORDS.find(validWord => guessedWord === validWord)){
@@ -155,29 +164,37 @@ class Game extends Component {
         }
         
         // Update keyboard colors
-        let newKeyboardColors = this.state.keyboardColors;
+        let keys = this.state.keyboardColors;
         guessedWordData.forEach(guessedLetter => {
             // If state is correct, override everything
-            // Else if state is present, override absent
-            // Else, state is absent, override nothing
-            if (guessedLetter.state === STATE.CORRECT) {
-                newKeyboardColors[guessedLetter.letter] = guessedLetter.state;
-            } else if (guessedLetter.state === STATE.PRESENT) {
-                if (newKeyboardColors[guessedLetter.letter] !== STATE.CORRECT ||
-                    !!!newKeyboardColors[guessedLetter.letter]) {
-                    newKeyboardColors[guessedLetter.letter] = guessedLetter.state;
+            // Else if state is present, override absent and stateless
+            // Else, state is absent, override only stateless
+            
+            // current letter state
+            const cls = guessedLetter.state;
+            const cl = guessedLetter.letter;
+            if (cls === STATE.CORRECT) {
+                keys[cl] = cls;
+            } else if (cls === STATE.PRESENT) {
+                if (keys[cl] !== STATE.CORRECT || !!!keys[cl]) {
+                    keys[cl] = cls;
                 }
-            } else if (guessedLetter.state === STATE.ABSENT) {
-                if (newKeyboardColors[guessedLetter.letter] === STATE.STATELESS ||
-                    !!!newKeyboardColors[guessedLetter.letter]) {
-                    newKeyboardColors[guessedLetter.letter] = guessedLetter.state;
+            } else if (cls === STATE.ABSENT) {
+                if (keys[cl] === STATE.STATELESS || !!!keys[cl]) {
+                    keys[cl] = cls;
                 }
             }
         });
 
         gameData[this.currentWord] = guessedWordData;
-        this.setState({ gameData: gameData, keyboardColors: newKeyboardColors});
+        this.setState({ gameData: gameData, keyboardColors: keys});
         this.advanceToNextWord();
+
+        // Any attempts left?
+        if (this.currentWord === this.attemptsAllowed) {
+            // Game over
+            this.setState({isGameOver: true});
+        }
     }
 
     advanceToNextWord() {

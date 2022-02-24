@@ -42,10 +42,11 @@
   display: flex;
   color: white;
   flex-direction: column;
-  height: calc(100% - 50px);
+  height: calc(100vh - 50px);
   width: 100%;
   max-width: 500px;
   margin: 0 auto;
+  align-content: stretch;
 }
 
 /* Tile */
